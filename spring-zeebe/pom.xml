@@ -1,0 +1,332 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.camunda</groupId>
+    <artifactId>camunda-release-parent</artifactId>
+    <version>3.3</version>
+    <!-- do not remove empty tag - http://jira.codehaus.org/browse/MNG-4687 -->
+    <relativePath />
+  </parent>
+
+  <groupId>io.zeebe.spring.root</groupId>
+  <artifactId>spring-zeebe-root</artifactId>
+  <name>pom/spring-zeebe</name>
+  <version>0.27.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
+
+  <properties>
+    <project.build.resourceEncoding>${project.build.sourceEncoding}</project.build.resourceEncoding>
+    <version.java>8</version.java>
+    <java.version>${version.java}</java.version>
+
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+
+    <zeebe.version>0.26.0</zeebe.version>
+    <spring-boot.version>2.2.11.RELEASE</spring-boot.version>
+
+    <!-- release parent settings for distribution management -->
+    <nexus.snapshot.repository>
+      https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/
+    </nexus.snapshot.repository>
+    <nexus.release.repository>https://app.camunda.com/nexus/content/repositories/zeebe-io/
+    </nexus.release.repository>
+
+    <kotlin.version>1.2.60</kotlin.version>
+    <kotlin-jackson.version>2.9.4.1</kotlin-jackson.version>
+    <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+
+    <plugin.version.javadoc>3.1.1</plugin.version.javadoc>
+    <!-- disable jdk8 javadoc checks on release build -->
+    <additionalparam>-Xdoclint:none</additionalparam>
+  </properties>
+
+  <modules>
+    <module>test</module>
+    <module>util</module>
+
+    <module>client</module>
+
+    <module>examples</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-dependencies</artifactId>
+        <version>${spring-boot.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+      <dependency>
+        <groupId>io.zeebe</groupId>
+        <artifactId>zeebe-bom</artifactId>
+        <version>${zeebe.version}</version>
+        <scope>import</scope>
+        <type>pom</type>
+      </dependency>
+
+      <!-- BROKER -->
+      <dependency>
+        <groupId>io.zeebe.spring</groupId>
+        <artifactId>spring-zeebe-broker</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.zeebe.spring</groupId>
+        <artifactId>spring-zeebe-broker-starter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <!-- CLIENT -->
+      <dependency>
+        <groupId>io.zeebe.spring</groupId>
+        <artifactId>spring-zeebe</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.zeebe.spring</groupId>
+        <artifactId>spring-zeebe-starter</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.zeebe.spring</groupId>
+        <artifactId>spring-zeebe-util</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.zeebe.spring</groupId>
+        <artifactId>spring-zeebe-test</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-stdlib-jdk8</artifactId>
+        <version>${kotlin.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-test</artifactId>
+        <version>${kotlin.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.module</groupId>
+        <artifactId>jackson-module-kotlin</artifactId>
+        <version>${kotlin-jackson.version}</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- no dependencies allowed here, specify in submodules! -->
+
+  <build>
+    <defaultGoal>clean install</defaultGoal>
+    <pluginManagement>
+      <plugins>
+        <!-- Disable adding license header -->
+        <plugin>
+          <groupId>com.mycila</groupId>
+          <artifactId>license-maven-plugin</artifactId>
+          <configuration>
+            <skip>true</skip>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.8.0</version>
+          <!-- available from Java 9, but we went back to jdk8 for building
+          <configuration>
+            <release>${java.version}</release>
+          </configuration>
+      	  -->
+        </plugin>
+        <plugin>
+          <artifactId>kotlin-maven-plugin</artifactId>
+          <groupId>org.jetbrains.kotlin</groupId>
+          <version>${kotlin.version}</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <artifactId>kotlin-maven-plugin</artifactId>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <executions>
+          <execution>
+            <id>compile</id>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <sourceDirs>
+                <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                <sourceDir>${project.basedir}/src/main/java</sourceDir>
+              </sourceDirs>
+            </configuration>
+          </execution>
+          <execution>
+            <id>test-compile</id>
+            <goals>
+              <goal>test-compile</goal>
+            </goals>
+            <configuration>
+              <sourceDirs>
+                <sourceDir>${project.basedir}/src/test/kotlin</sourceDir>
+                <sourceDir>${project.basedir}/src/test/java</sourceDir>
+              </sourceDirs>
+            </configuration>
+          </execution>
+        </executions>
+        <configuration>
+          <jvmTarget>${java.version}</jvmTarget>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+        <executions>
+          <!-- Replacing default-compile as it is treated specially by maven -->
+          <execution>
+            <id>default-compile</id>
+            <phase>none</phase>
+          </execution>
+          <!-- Replacing default-testCompile as it is treated specially by maven -->
+          <execution>
+            <id>default-testCompile</id>
+            <phase>none</phase>
+          </execution>
+          <execution>
+            <id>java-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>java-test-compile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <version>0.8.5</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>report</id>
+            <phase>test</phase>
+            <goals>
+              <goal>report</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!--<plugin>-->
+      <!--<groupId>com.coveo</groupId>-->
+      <!--<artifactId>fmt-maven-plugin</artifactId>-->
+      <!--<version>2.5.1</version>-->
+      <!--<configuration>-->
+      <!--<displayFiles>true</displayFiles>-->
+      <!--</configuration>-->
+      <!--<executions>-->
+      <!--<execution>-->
+      <!--<goals>-->
+      <!--<goal>check</goal>-->
+      <!--</goals>-->
+      <!--</execution>-->
+      <!--</executions>-->
+      <!--</plugin>-->
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>release</id>
+      <properties>
+        <plugin.version.gpg>1.6</plugin.version.gpg>
+        <gpg.passphrase>${env.GPG_PASS}</gpg.passphrase>
+        <resume>false</resume>
+        <tag>${env.RELEASE_VERSION}</tag>
+        <releaseVersion>${env.RELEASE_VERSION}</releaseVersion>
+        <developmentVersion>${env.DEVELOPMENT_VERSION}</developmentVersion>
+        <arguments>-DskipTests</arguments>
+      </properties>
+      <build>
+        <pluginManagement>
+          <plugins>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-gpg-plugin</artifactId>
+              <configuration>
+                <gpgArguments>
+                  <arg>--pinentry-mode</arg>
+                  <arg>loopback</arg>
+                </gpgArguments>
+              </configuration>
+            </plugin>
+          </plugins>
+        </pluginManagement>
+      </build>
+    </profile>
+  </profiles>
+
+  <repositories>
+    <repository>
+      <id>zeebe-snapshots</id>
+      <name>Zeebe Snapshot Repository</name>
+      <url>https://app.camunda.com/nexus/content/repositories/zeebe-io-snapshots/</url>
+      <releases>
+        <enabled>false</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <developers>
+    <developer>
+      <name>Jan Galinski</name>
+      <organization>Holisticon AG</organization>
+      <url>https://jangalinski.github.io</url>
+      <roles>
+        <role>initiator</role>
+      </roles>
+    </developer>
+  </developers>
+
+  <licenses>
+    <license>
+      <name>Apache License</name>
+    </license>
+  </licenses>
+
+  <scm>
+    <url>https://github.com/zeebe-io/spring-zeebe</url>
+    <connection>scm:git:git@github.com:zeebe-io/spring-zeebe.git</connection>
+    <developerConnection>scm:git:git@github.com:zeebe-io/spring-zeebe.git</developerConnection>
+    <tag>HEAD</tag>
+  </scm>
+</project>

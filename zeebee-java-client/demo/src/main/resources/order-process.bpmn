@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1s2gz63" targetNamespace="http://bpmn.io/schema/bpmn" exporter="bpmn-js (https://demo.bpmn.io)" exporterVersion="8.2.0">
+  <bpmn:process id="Process_1pp18ic" isExecutable="false">
+    <bpmn:startEvent id="StartEvent_049cksm" name="Order placed">
+      <bpmn:outgoing>Flow_15hm14n</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:endEvent id="Event_16o4833" name="Order delivered">
+      <bpmn:incoming>Flow_15hm14n</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_15hm14n" sourceRef="StartEvent_049cksm" targetRef="Event_16o4833" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1pp18ic">
+      <bpmndi:BPMNEdge id="Flow_15hm14n_di" bpmnElement="Flow_15hm14n">
+        <di:waypoint x="208" y="100" />
+        <di:waypoint x="442" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_16o4833_di" bpmnElement="Event_16o4833">
+        <dc:Bounds x="442" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="421" y="125" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_049cksm">
+        <dc:Bounds x="172" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="125" width="66" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
