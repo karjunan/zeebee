@@ -1,49 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1mvajk3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
-  <bpmn:process id="Order_Placed" isExecutable="true">
-    <bpmn:startEvent id="StartEvent_1" name="order-placed">
-      <bpmn:outgoing>Flow_1rw3t9t</bpmn:outgoing>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_03nz72y" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
+  <bpmn:process id="order_placed" name="order placed" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="order placed">
+      <bpmn:outgoing>Flow_19xwzhp</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="payment-service-task-1" name="Collect Money" camunda:jobPriority="1">
-      <bpmn:extensionElements>
-        <camunda:properties>
-          <camunda:property name="type" value="payment-service" />
-        </camunda:properties>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_1rw3t9t</bpmn:incoming>
-      <bpmn:outgoing>Flow_0s52sfo</bpmn:outgoing>
+    <bpmn:task id="payment-service" name="Collect Money">
+      <bpmn:incoming>Flow_19xwzhp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1mycyhn</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_1rw3t9t" sourceRef="StartEvent_1" targetRef="payment-service-task-1" />
-    <bpmn:task id="fetcher-service-task-1" name="Fetch Items">
-      <bpmn:incoming>Flow_0s52sfo</bpmn:incoming>
-      <bpmn:outgoing>Flow_0agbuxv</bpmn:outgoing>
+    <bpmn:sequenceFlow id="Flow_19xwzhp" sourceRef="StartEvent_1" targetRef="payment-service" />
+    <bpmn:task id="fetcher-service" name="Fetch Items">
+      <bpmn:incoming>Flow_1mycyhn</bpmn:incoming>
+      <bpmn:outgoing>Flow_07urkhn</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0s52sfo" sourceRef="payment-service-task-1" targetRef="fetcher-service-task-1" />
-    <bpmn:task id="shipment-service-task-1" name="Ship Product">
-      <bpmn:incoming>Flow_0agbuxv</bpmn:incoming>
-      <bpmn:outgoing>Flow_1rsezvp</bpmn:outgoing>
+    <bpmn:sequenceFlow id="Flow_1mycyhn" sourceRef="payment-service" targetRef="fetcher-service" />
+    <bpmn:task id="shipper-service" name="Ship Product">
+      <bpmn:incoming>Flow_07urkhn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mn7il5</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0agbuxv" sourceRef="fetcher-service-task-1" targetRef="shipment-service-task-1" />
-    <bpmn:endEvent id="Event_069o0jw" name="order-delivered">
-      <bpmn:incoming>Flow_1rsezvp</bpmn:incoming>
+    <bpmn:sequenceFlow id="Flow_07urkhn" sourceRef="fetcher-service" targetRef="shipper-service" />
+    <bpmn:endEvent id="Event_1vysbnr" name="order delivered">
+      <bpmn:incoming>Flow_0mn7il5</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1rsezvp" sourceRef="shipment-service-task-1" targetRef="Event_069o0jw" />
+    <bpmn:sequenceFlow id="Flow_0mn7il5" sourceRef="shipper-service" targetRef="Event_1vysbnr" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Order_Placed">
-      <bpmndi:BPMNEdge id="Flow_1rw3t9t_di" bpmnElement="Flow_1rw3t9t">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order_placed">
+      <bpmndi:BPMNEdge id="Flow_19xwzhp_di" bpmnElement="Flow_19xwzhp">
         <di:waypoint x="215" y="117" />
         <di:waypoint x="270" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0s52sfo_di" bpmnElement="Flow_0s52sfo">
+      <bpmndi:BPMNEdge id="Flow_1mycyhn_di" bpmnElement="Flow_1mycyhn">
         <di:waypoint x="370" y="117" />
         <di:waypoint x="430" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0agbuxv_di" bpmnElement="Flow_0agbuxv">
+      <bpmndi:BPMNEdge id="Flow_07urkhn_di" bpmnElement="Flow_07urkhn">
         <di:waypoint x="530" y="117" />
         <di:waypoint x="590" y="117" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1rsezvp_di" bpmnElement="Flow_1rsezvp">
+      <bpmndi:BPMNEdge id="Flow_0mn7il5_di" bpmnElement="Flow_0mn7il5">
         <di:waypoint x="690" y="117" />
         <di:waypoint x="752" y="117" />
       </bpmndi:BPMNEdge>
@@ -53,16 +48,16 @@
           <dc:Bounds x="166" y="142" width="62" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0unxp84_di" bpmnElement="payment-service-task-1">
+      <bpmndi:BPMNShape id="Activity_001hb6x_di" bpmnElement="payment-service">
         <dc:Bounds x="270" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1dzad7w_di" bpmnElement="fetcher-service-task-1">
+      <bpmndi:BPMNShape id="Activity_0zya8li_di" bpmnElement="fetcher-service">
         <dc:Bounds x="430" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1otzsw1_di" bpmnElement="shipment-service-task-1">
+      <bpmndi:BPMNShape id="Activity_11si7ud_di" bpmnElement="shipper-service">
         <dc:Bounds x="590" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_069o0jw_di" bpmnElement="Event_069o0jw">
+      <bpmndi:BPMNShape id="Event_1vysbnr_di" bpmnElement="Event_1vysbnr">
         <dc:Bounds x="752" y="99" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="733" y="142" width="74" height="14" />
