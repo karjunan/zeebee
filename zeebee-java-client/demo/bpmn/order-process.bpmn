@@ -11,20 +11,10 @@
     </bpmn:startEvent>
     <bpmn:sequenceFlow id="Flow_19xwzhp" sourceRef="StartEvent_1" targetRef="payment-service-task-1" />
     <bpmn:task id="fetcher-service-task-1" name="Fetch Items">
-      <bpmn:extensionElements>
-        <camunda:properties>
-          <camunda:property name="type" value="fetcher-service" />
-        </camunda:properties>
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_1mycyhn</bpmn:incoming>
       <bpmn:outgoing>Flow_07urkhn</bpmn:outgoing>
     </bpmn:task>
     <bpmn:task id="shipper-service-task-1" name="Ship Product">
-      <bpmn:extensionElements>
-        <camunda:properties>
-          <camunda:property name="type" value="shipper-service" />
-        </camunda:properties>
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_07urkhn</bpmn:incoming>
       <bpmn:outgoing>Flow_0mn7il5</bpmn:outgoing>
     </bpmn:task>
@@ -34,11 +24,6 @@
     </bpmn:endEvent>
     <bpmn:sequenceFlow id="Flow_0mn7il5" sourceRef="shipper-service-task-1" targetRef="Event_1vysbnr" />
     <bpmn:task id="payment-service-task-1" name="Collect Money">
-      <bpmn:extensionElements>
-        <camunda:properties>
-          <camunda:property />
-        </camunda:properties>
-      </bpmn:extensionElements>
       <bpmn:incoming>Flow_19xwzhp</bpmn:incoming>
       <bpmn:outgoing>Flow_1mycyhn</bpmn:outgoing>
     </bpmn:task>
