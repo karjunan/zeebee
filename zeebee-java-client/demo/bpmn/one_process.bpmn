@@ -4,15 +4,15 @@
     <bpmn:startEvent id="StartEvent_1" name="order placed">
       <bpmn:outgoing>Flow_0w9slj4</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:task id="Activity_0wcxuoz" name="Collect Money">
+    <bpmn:task id="payment-service" name="Collect Money">
       <bpmn:incoming>Flow_0w9slj4</bpmn:incoming>
       <bpmn:outgoing>Flow_012r5wy</bpmn:outgoing>
     </bpmn:task>
-    <bpmn:sequenceFlow id="Flow_0w9slj4" sourceRef="StartEvent_1" targetRef="Activity_0wcxuoz" />
+    <bpmn:sequenceFlow id="Flow_0w9slj4" sourceRef="StartEvent_1" targetRef="payment-service" />
     <bpmn:endEvent id="Event_0i57xrd" name="order delivered">
       <bpmn:incoming>Flow_012r5wy</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_012r5wy" sourceRef="Activity_0wcxuoz" targetRef="Event_0i57xrd" />
+    <bpmn:sequenceFlow id="Flow_012r5wy" sourceRef="payment-service" targetRef="Event_0i57xrd" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="order_placed">
@@ -30,7 +30,7 @@
           <dc:Bounds x="166" y="142" width="62" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0wcxuoz_di" bpmnElement="Activity_0wcxuoz">
+      <bpmndi:BPMNShape id="Activity_0wcxuoz_di" bpmnElement="payment-service">
         <dc:Bounds x="270" y="77" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0i57xrd_di" bpmnElement="Event_0i57xrd">
